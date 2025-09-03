@@ -120,12 +120,23 @@ onMounted(async () => {
       <div class="title">Tasks</div>
       <div class="content">
         <a-table :dataSource="dataSource" :columns="columns">
-          <template #bodyCell="{ column, record }" v-if="user.username === 'admin'">
-            <template v-if="column.key === 'operation'">
-              <a-popconfirm v-if="dataSource.length" title="Sure to delete?" @confirm="onDelete(record.id)">
-                <a>delete</a>
-              </a-popconfirm>
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'overtime'">
+              <span>
+                <a-tag :color="record.overtime === true ? 'geekblue' : 'green'">
+                  {{ record.overtime === true ? '是' : '否' }}
+                </a-tag>
+              </span>
             </template>
+
+            <template v-if="user.username === 'admin'">
+              <template v-if="column.key === 'operation'">
+                <a-popconfirm v-if="dataSource.length" title="Sure to delete?" @confirm="onDelete(record.id)">
+                  <a>delete</a>
+                </a-popconfirm>
+              </template>
+            </template>
+
           </template>
         </a-table>
 
